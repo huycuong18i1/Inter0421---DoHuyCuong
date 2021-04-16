@@ -56,16 +56,16 @@ where (year(hopdong.NgayLamHopDong) = 2018 and year(hopdong.NgayKetThuc) = 2018)
 -- Hiển thị thông tin HoTenKhachHang có trong hệ thống, với yêu cầu
 -- HoThenKhachHang không trùng nhau.
 -- Học viên sử dụng theo 3 cách khác nhau để thực hiện yêu cầu trên
-
--- +Sử dụng distinct ( loại bỏ dữ liệu trùng lặp )
+-- 
+-- cách 1: Sử dụng distinct ( loại bỏ dữ liệu trùng lặp )
 select distinct HoTen as HoTenKhachHang from khachhang as kh;
--- +Sử dụng group by gom các tên trùng nhau lại 
+-- cách 2: Sử dụng group by gom các tên trùng nhau lại 
 select HoTen as HoTenKhachHang from khachhang as kh
 group by kh.HoTen; 
--- +Sử dụng group by và having để lọc Họ tên khách hàng trùng lặp
-select HoTen, count(*) as duplicate from khachhang as kh
-group by kh.HoTen
-having count(*) = 1;
+-- cách 3: Sử dụng union để kết hợp các kết quả của hai hoặc nhiều câu lệnh SELECT mà không cần trả về bất kỳ hàng trùng lặp nào.
+select khachhang.HoTen from khachhang
+union 
+select khachhang.HoTen from khachhang
 
  
 
