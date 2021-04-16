@@ -37,5 +37,10 @@ left join dichvudikem on hopdongchitiet.IDDichVuDiKem = dichvudikem.IDDichVuDiKe
 -- Hiển thị IDDichVu, TenDichVu, DienTich, ChiPhiThue,
 -- TenLoaiDichVu của tất cả các loại Dịch vụ chưa từng được Khách hàng
 -- thực hiện đặt từ quý 1 của năm 2019 (Quý 1 là tháng 1, 2, 3).
+SELECT dv.IDDichVu, dv.TenDichVu, dv.DienTich, dv.ChiPhiThue, hopdong.NgayKetThuc, loaidichvu.TenLoaiDichVu FROM dichvu as dv
+inner join hopdong on dv.IDDichVu = hopdong.IDDichVu
+inner join loaidichvu on dv.IDLoaiDichVu = loaidichvu.IDLoaiDichVu
+where not (month(hopdong.NgayKetThuc) in (1,2,3) and year(hopdong.NgayKetThuc) = 2019)
+;
 
  
