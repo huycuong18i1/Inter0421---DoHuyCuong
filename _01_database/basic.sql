@@ -42,5 +42,32 @@ inner join hopdong on dv.IDDichVu = hopdong.IDDichVu
 inner join loaidichvu on dv.IDLoaiDichVu = loaidichvu.IDLoaiDichVu
 where not (month(hopdong.NgayKetThuc) in (1,2,3) and year(hopdong.NgayKetThuc) = 2019)
 ;
+-- task7 
+-- Hiển thị thông tin IDDichVu, TenDichVu, DienTich, SoNguoiToiDa,
+-- ChiPhiThue, TenLoaiDichVu của tất cả các loại dịch vụ đã từng được
+-- Khách hàng đặt phòng trong năm 2018 nhưng chưa từng được Khách
+-- hàng đặt phòng trong năm 2019
+SELECT dv.IDDichVu, dv.TenDichVu, dv.DienTich, dv.SoNguoiToiDa, dv.ChiPhiThue, hopdong.NgayLamHopDong, hopdong.NgayKetThuc, loaidichvu.TenLoaiDichVu FROM dichvu as dv
+inner join hopdong on dv.IDDichVu = hopdong.IDDichVu
+inner join loaidichvu on dv.IDLoaiDichVu = loaidichvu.IDLoaiDichVu
+where (year(hopdong.NgayLamHopDong) = 2018 and year(hopdong.NgayKetThuc) = 2018) and not (year(hopdong.NgayLamHopDong) = 2019 and year(hopdong.NgayKetThuc) = 2019)
+;
+-- task 8 
+-- Hiển thị thông tin HoTenKhachHang có trong hệ thống, với yêu cầu
+-- HoThenKhachHang không trùng nhau.
+-- Học viên sử dụng theo 3 cách khác nhau để thực hiện yêu cầu trên
+
+-- +Sử dụng distinct ( loại bỏ dữ liệu trùng lặp )
+select distinct HoTen as HoTenKhachHang from khachhang as kh;
+-- +Sử dụng group by gom các tên trùng nhau lại 
+select HoTen as HoTenKhachHang from khachhang as kh
+group by kh.HoTen; 
+-- +Sử dụng group by và having để lọc Họ tên khách hàng trùng lặp
+select HoTen, count(*) as duplicate from khachhang as kh
+group by kh.HoTen
+having count(*) = 1;
+
+ 
+
 
  
