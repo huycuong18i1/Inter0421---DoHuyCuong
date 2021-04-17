@@ -98,6 +98,21 @@ inner join khachhang on hopdong.IDKhachHang = khachhang.IDKhachHang
 inner join loaikhach on khachhang.IDLoaiKhach = loaikhach.IDLoaiKhach
 where loaikhach.TenLoaiKhach = 'Diamond' and khachhang.DiaChi in ('Vinh', 'Quảng Ngãi')
 ;
+-- task 12
+-- Hiển thị thông tin IDHopDong, TenNhanVien, TenKhachHang,
+-- SoDienThoaiKhachHang, TenDichVu, SoLuongDichVuDikem (được
+-- tính dựa trên tổng Hợp đồng chi tiết), TienDatCoc của tất cả các dịch vụ
+-- đã từng được khách hàng đặt vào 3 tháng cuối năm 2019 nhưng chưa
+-- từng được khách hàng đặt vào 6 tháng đầu năm 2019. 
+SELECT hopdong.IDHopDong, hopdong.NgayLamHopDong , nhanvien.HoTen as TenNhanVien, khachhang.HoTen as TenKhachHang, khachhang.SDT as SDTKhachHang, dichvu.TenDichVu, hopdong.TienDatCoc FROM hopdong
+inner join nhanvien on hopdong.IDNhanVien = nhanvien.IDNhanVien
+inner join khachhang on hopdong.IDKhachHang = khachhang.IDKhachHang
+inner join dichvu on hopdong.IDDichVu = dichvu.IDDichVu
+inner join hopdongchitiet on hopdong.IDHopDong = hopdongchitiet.IDHopDong 
+inner join dichvudikem on hopdongchitiet.IDHopDongChiTiet = hopdongchitiet.IDHopDongChiTiet
+where (month(hopdong.NgayLamHopDong) in (10,11,12) and year(hopdong.NgayLamHopDong) = 2019)
+group by hopdong.IDHopDong
+;
  
 
 
