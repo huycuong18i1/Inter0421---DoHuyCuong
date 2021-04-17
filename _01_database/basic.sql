@@ -113,6 +113,31 @@ inner join dichvudikem on hopdongchitiet.IDHopDongChiTiet = hopdongchitiet.IDHop
 where (month(hopdong.NgayLamHopDong) in (10,11,12) and year(hopdong.NgayLamHopDong) = 2019)
 group by hopdong.IDHopDong
 ;
+-- task13
+-- Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các
+-- Khách hàng đã đặt phòng. (Lưu ý là có thể có nhiều dịch vụ có số lần sử
+-- dụng nhiều như nhau).
+SELECT *, count(*) as DichVuSDNhieuNhat FROM dichvudikem
+inner join hopdongchitiet on dichvudikem.IDDichVuDiKem = hopdongchitiet.IDDichVuDiKem
+group by hopdongchitiet.IDDichVuDiKem
+order by DichVuSDNhieuNhat desc
+;
+-- task14
+--  Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một
+-- lần duy nhất. Thông tin hiển thị bao gồm IDHopDong, TenLoaiDichVu,
+-- TenDichVuDiKem, SoLanSuDung.
+SELECT hopdong.IDHopDong, dvdk.TenDichVuDiKem, loaidichvu.TenLoaiDichVu, count(*) as solansd FROM dichvudikem as dvdk
+inner join hopdongchitiet on dvdk.IDDichVuDiKem = hopdongchitiet.IDDichVuDiKem
+inner join hopdong on hopdongchitiet.IDHopDong = hopdong.IDHopDong
+inner join dichvu on hopdong.IDDichVu = dichvu.IDDichVu
+inner join loaidichvu on dichvu.IDLoaiDichVu = loaidichvu.IDLoaiDichVu
+group by hopdongchitiet.IDDichVuDiKem
+having COUNT(*) = 1;
+;
+-- task15
+-- Hiển thi thông tin của tất cả nhân viên bao gồm IDNhanVien, HoTen,
+-- TrinhDo, TenBoPhan, SoDienThoai, DiaChi mới chỉ lập được tối đa 3
+-- hợp đồng từ năm 2018 đến 2019.
  
 
 
