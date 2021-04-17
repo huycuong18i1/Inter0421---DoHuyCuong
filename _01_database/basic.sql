@@ -76,6 +76,28 @@ where (month(hopdong.NgayLamHopDong) in (1,2,3,4,5,6,7,8,9,10,11,12) and year(ho
 group by month(hopdong.NgayLamHopDong)
 having count(hopdong.NgayLamHopDong)
 ;
+-- task10 
+-- Hiển thị thông tin tương ứng với từng Hợp đồng thì đã sử dụng bao nhiêu
+-- Dịch vụ đi kèm. Kết quả hiển thị bao gồm IDHopDong,
+-- NgayLamHopDong, NgayKetthuc, TienDatCoc,
+-- SoLuongDichVuDiKem (được tính dựa trên việc count các
+-- IDHopDongChiTiet). 
+SELECT hd.IDHopDong, hd.NgayLamHopDong, hd.NgayKetThuc, hd.TienDatCoc, count(*) as SoLuongDichVuDiKem FROM hopdong as hd
+inner join hopdongchitiet on hd.IDHopDong = hopdongchitiet.IDHopDong
+inner join dichvudikem on hopdongchitiet.IDDichVuDiKem = dichvudikem.IDDichVuDiKem
+group by hd.IDHopDong
+;
+-- task11
+-- Hiển thị thông tin các Dịch vụ đi kèm đã được sử dụng bởi những Khách
+-- hàng có TenLoaiKhachHang là “Diamond” và có địa chỉ là “Vinh”
+-- hoặc “Quảng Ngãi”. 
+SELECT *, loaikhach.TenLoaiKhach, khachhang.DiaChi FROM dichvudikem
+inner join hopdongchitiet on dichvudikem.IDDichVuDiKem = hopdongchitiet.IDDichVuDiKem
+inner join hopdong on hopdongchitiet.IDHopDong = hopdong.IDHopDong
+inner join khachhang on hopdong.IDKhachHang = khachhang.IDKhachHang
+inner join loaikhach on khachhang.IDLoaiKhach = loaikhach.IDLoaiKhach
+where loaikhach.TenLoaiKhach = 'Diamond' and khachhang.DiaChi in ('Vinh', 'Quảng Ngãi')
+;
  
 
 
