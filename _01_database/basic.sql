@@ -138,7 +138,48 @@ having COUNT(*) = 1;
 -- Hiển thi thông tin của tất cả nhân viên bao gồm IDNhanVien, HoTen,
 -- TrinhDo, TenBoPhan, SoDienThoai, DiaChi mới chỉ lập được tối đa 3
 -- hợp đồng từ năm 2018 đến 2019.
- 
+ SELECT nhanvien.IDNhanVien, nhanvien.HoTen, trinhdo.TrinhDo, bophan.TenBoPhan,  nhanvien.SDT, nhanvien.DiaChi, count(*) as SoLuongHDdaLap FROM nhanvien
+inner join trinhdo on nhanvien.IDTrinhDo = trinhdo.IDTrinhDo
+inner join bophan on nhanvien.IDBoPhan = bophan.IDBoPhan
+inner join hopdong on nhanvien.IDNhanVien = hopdong.IDNhanVien
+where (year(hopdong.NgayLamHopDong) in (2018, 2019))
+group by hopdong.IDNhanVien
+having COUNT(*) <= 3
+;
+-- task 16 
+-- Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017
+-- đến năm 2019. 
+delete 
+from nhanvien
+where nhanvien.IDNhanVien in (
+select hopdong.IDNhanVien
+from hopdong
+where 
+(year(hopdong.NgayLamHopDong) not in (2017, 2018, 2019)) and hopdong.IDNhanVien = nhanvien.IDNhanVien
+);
+-- task 19
+-- Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong
+-- năm 2019 lên gấp đôi.
+update dichvudikem
+set dichvudikem.Gia = dichvudikem.Gia * 2 
+where dichvudikem.IDDichVuDiKem in
+(
+SELECT *, count(*) as DichVuSDNhieuNhat FROM dichvudikem
+inner join hopdongchitiet on dichvudikem.IDDichVuDiKem = hopdongchitiet.IDDichVuDiKem
+group by hopdongchitiet.IDDichVuDiKem
+having count(*) >= 10)
+;
+-- task20
+-- Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ
+-- thống, thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang),
+-- HoTen, Email, SoDienThoai, NgaySinh, DiaChi. 
+SELECT nhanvien.IDNhanVien, nhanvien.HoTen, nhanvien.Email, nhanvien.SDT, nhanvien.NgaySinh, nhanvien.DiaChi, khachhang.IDKhachHang, khachhang.HoTen, khachhang.Email, khachhang.SDT, khachhang.NgaySinh, khachhang.DiaChi  FROM hopdong
+inner join khachhang on hopdong.IDKhachHang = khachhang.IDKhachHang
+inner join nhanvien on hopdong.IDNhanVien = nhanvien.IDNhanVien
+;
+-- bị lỗi phần update delete vì xóa file query sql table nên em skip task 17,18 và qua nâng cao
+
+
 
 
  
