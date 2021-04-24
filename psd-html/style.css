@@ -67,7 +67,7 @@ img {
   transition: color 0.25s linear, border 0.25s linear;
 }
 .header__menu-link:hover {
-  color: #ffc87a;
+  color: #5bcaee;
 }
 
 .logo {
@@ -77,7 +77,7 @@ img {
   text-decoration: none;
 }
 .logo__text {
-  color: #ffc87a;
+  color: #5bcaee;
 }
 
 .banner {
@@ -125,10 +125,10 @@ img {
   border-radius: 5rem;
 }
 .btn--primary {
-  background-color: #ffc87a;
+  background-color: #5bcaee;
 }
 .btn--primary.has--shadow {
-  box-shadow: 0 2px 46px -4px #ffc87a;
+  box-shadow: 0 2px 46px -4px #5bcaee;
 }
 
 .category__list {
@@ -349,7 +349,7 @@ img {
   margin-bottom: 6rem;
 }
 .connect__notice span {
-  color: #ffc87a;
+  color: #5bcaee;
 }
 .connect__list {
   display: flex;
